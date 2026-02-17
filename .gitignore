@@ -1,0 +1,15 @@
+# MATLAB temporary files
+*.asv
+*.mex*
+*.mat
+
+# EEG data (do not upload raw data)
+data/raw/
+data/*.edf
+
+# Results and figures
+results/
+
+# OS files
+.DS_Store
+Thumbs.db
