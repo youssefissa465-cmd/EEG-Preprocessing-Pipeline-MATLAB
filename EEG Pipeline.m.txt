@@ -1,0 +1,35 @@
+
+
+main_pipeline.m (Production Version)
+
+matlab
+%% EEG Preprocessing Pipeline
+% Author: Your Name
+% Description: End-to-end EEG preprocessing framework for BCI
+
+clear; clc; close all;
+
+%% Load Demo Data
+fs = 250;
+t = 0:1/fs:10;
+nCh = 8;
+
+rawEEG = randn(nCh, length(t))*5;
+rawEEG(1,:) = rawEEG(1,:) + 50*sin(2*pi*50*t);
+rawEEG(2,500:550) = 300;
+
+%% Phase 1 – Common Average Reference
+eeg1 = rawEEG - mean(rawEEG, 1);
+
+%% Phase 2 – Filtering
+eeg2 = bandpass_filter(eeg1, fs);
+eeg2 = notch_filter(eeg2, fs);
+
+%% Phase 3 – ICA Artifact Removal
+eeg3 = ica_artifact_removal(eeg2);
+
+%% Phase 4 – Normalization
+eeg_clean = zscore_norm(eeg3);
+
+%% Visualization
+plot_eeg(t, rawEEG, eeg_clean);
